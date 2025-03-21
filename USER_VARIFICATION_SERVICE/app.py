@@ -72,27 +72,7 @@ def api_face_monitoring():
             mimetype="application/json"
         )
 
-    try:
-        audio_file = request.files['audio_file']
-        save_path = os.path.join(app.config['UPLOAD_AUDIO_FOLDER'], secure_filename(audio_file.filename))
-        audio_file.save(save_path)
-
-        response = flowAnalyzerPipeline(save_path)
-
-        return Response(
-            response=json.dumps(response),
-            status=200,
-            mimetype="application/json"
-        )
-    except Exception as e:
-        return Response(
-            response=json.dumps({
-                "message": "Flow analysis failed",
-                "error": str(e)
-            }),
-            status=400,
-            mimetype="application/json"
-        )
+   
 
 @app.route('/api/answer_evaluation', methods=['POST'])
 def api_answer_evaluation():
