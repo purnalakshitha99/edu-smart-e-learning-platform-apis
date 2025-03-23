@@ -1,6 +1,4 @@
 import json, os
-from src.document_rag import *
-from src.flow_analyzer import *
 from src.answer_evaluation import *
 from src.face_monitoring_inference import *
 from flask import Flask, request, Response
@@ -101,32 +99,6 @@ def api_answer_evaluation():
             mimetype="application/json"
         )
 
-@app.route('/api/document_rag', methods=['POST'])
-def api_document_rag():
-    try:
-        cv = request.files['cv']
-        cv_path = os.path.join(app.config['UPLOAD_CV_FOLDER'], secure_filename(cv.filename))
-        cv.save(cv_path)
-
-        response = retrieve_documents(cv_path)
-        response = json.loads(response)
-        return Response(
-            response=json.dumps({
-                "JDs": response
-            }),
-            status=200,
-            mimetype="application/json"
-        )
-
-    except Exception as e:
-        return Response(
-            response=json.dumps({
-                "message": "Document RAG failed",
-                "error": str(e)
-            }),
-            status=400,
-            mimetype="application/json"
-        )
 
 if __name__ == '__main__':
     app.run(
