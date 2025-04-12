@@ -21,7 +21,7 @@ app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 
-
+#mongo app start
 mongo.init_app(app)
 
 logging.info(f'Preprocessed Text : {"Flask Server is started"}')
