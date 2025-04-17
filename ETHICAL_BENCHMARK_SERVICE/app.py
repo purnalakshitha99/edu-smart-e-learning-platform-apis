@@ -28,6 +28,7 @@ logging.info(f'Preprocessed Text : {"Flask Server is started"}')
 
 jwt = JWTManager(app)
 
+# ROUTES Declaration
 app.register_blueprint(auth_controller, url_prefix='/auth')
 app.register_blueprint(ethical_benchmark_controller, url_prefix='/ethical_benchmark')
 app.register_blueprint(test_controller, url_prefix='/test')
