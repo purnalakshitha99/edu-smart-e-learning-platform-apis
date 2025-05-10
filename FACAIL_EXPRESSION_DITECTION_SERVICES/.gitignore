@@ -3,3 +3,4 @@ pretrained_models
 __pycache__
 venv
 requirements.txt
+.myenv5

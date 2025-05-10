@@ -21,13 +21,14 @@ app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 
-
+#mongo app start
 mongo.init_app(app)
 
 logging.info(f'Preprocessed Text : {"Flask Server is started"}')
 
 jwt = JWTManager(app)
 
+# ROUTES Declaration
 app.register_blueprint(auth_controller, url_prefix='/auth')
 app.register_blueprint(ethical_benchmark_controller, url_prefix='/ethical_benchmark')
 app.register_blueprint(test_controller, url_prefix='/test')
