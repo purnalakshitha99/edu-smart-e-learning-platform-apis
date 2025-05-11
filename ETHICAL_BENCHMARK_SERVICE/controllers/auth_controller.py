@@ -42,6 +42,7 @@ def register():
         return jsonify({"message": "User already exists"}), 400
 
     hashed_password = generate_password_hash(password)
+    print("hashed_password : "+hashed_password)
 
     profile_picture_url = None  # Initialize to None
 
