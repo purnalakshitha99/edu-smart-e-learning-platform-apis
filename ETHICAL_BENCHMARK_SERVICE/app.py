@@ -34,4 +34,4 @@ app.register_blueprint(ethical_benchmark_controller, url_prefix='/ethical_benchm
 app.register_blueprint(test_controller, url_prefix='/test')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 
