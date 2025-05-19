@@ -15,10 +15,13 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-CORS(app, origins="http://localhost:5174")
+CORS(app, origins="http://localhost:5173")
+
 
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+
+print("MONGO_URI is:", app.config["MONGO_URI"])
 
 
 #mongo app start
