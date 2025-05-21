@@ -5,3 +5,5 @@ myenv/
 __pycache__
 /pipe/__pycache__
 ethicalvenv/
+ethical2/
+venv/
