@@ -4,6 +4,8 @@ from src.face_monitoring_inference import *
 from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 app = Flask(__name__)
 app.config['UPLOAD_IMAGE_FOLDER'] = 'store/images'
@@ -29,6 +31,8 @@ def api_face_detection():
             username,
             save_path
         )
+
+        print("user name : "+username)
 
         return Response(
             response=json.dumps({
