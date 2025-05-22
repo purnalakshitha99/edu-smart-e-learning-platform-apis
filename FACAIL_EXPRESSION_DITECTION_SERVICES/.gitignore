@@ -4,3 +4,8 @@ __pycache__
 venv
 requirements.txt
 .myenv5
+expression
+expression2
+requirements_facial_expression.txt
+requirements_lenovo.txt
+routes/__pycache__

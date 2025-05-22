@@ -4,5 +4,6 @@
 myenv/
 __pycache__
 /pipe/__pycache__
-requirements.txt
-venv
+ethicalvenv/
+ethical2/
+venv/
