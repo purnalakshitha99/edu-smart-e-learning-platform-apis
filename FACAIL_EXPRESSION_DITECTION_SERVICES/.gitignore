@@ -2,6 +2,7 @@ pretrained_models
 .idea
 __pycache__
 venv
+requirements.txt
 .myenv5
 expression
 expression2
