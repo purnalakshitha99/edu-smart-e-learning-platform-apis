@@ -37,6 +37,10 @@ def register():
     password = request.form.get("password")
     email = request.form.get("email")
     role = request.form.get("role", "student")  # Default to "student"
+    address = request.form.get("address")
+    student_id = request.form.get("student_id")
+    gender = request.form.get("gender")
+
 
     if mongo.db.users.find_one({"username": username}):
         return jsonify({"message": "User already exists"}), 400
@@ -63,6 +67,10 @@ def register():
         "email": email,
         "role": role,
         "profile_picture": profile_picture_url,  # Store the URL in the database
+        "address": address,
+        "student_id": student_id,
+        "gender":address,
+
     }
 
     try:
