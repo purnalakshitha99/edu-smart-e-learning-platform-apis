@@ -24,6 +24,7 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 print("MONGO_URI is:", app.config["MONGO_URI"])
 
 
+
 #mongo app start
 mongo.init_app(app)
 
