@@ -536,7 +536,7 @@ def submit_exam():
     if not data:
         return jsonify({"error": "No data provided"}), 400
     
-    required_fields = ["userId", "examId", "score"]
+    required_fields = ["userId", "examId"]
     validation_error = validate_request_data(required_fields, data)
     if validation_error:
         return jsonify({"error": validation_error}), 400
