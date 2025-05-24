@@ -627,41 +627,7 @@ def get_user_exam_reports(user_id):
         logger.error(f"Error fetching user exam reports: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route("/get-exam-report/<report_id>", methods=["GET"])
-@error_handler
-def get_exam_report(report_id):
-    """Get a single exam report by its ID."""
-    try:
-        if not ObjectId.is_valid(report_id):
-            return jsonify({"error": "Invalid report ID"}), 400
 
-        report = answer_collection.find_one({"_id": ObjectId(report_id)})
-        
-        if not report:
-            return jsonify({"error": "Report not found"}), 404
-
-        # Get exam details
-        exam = collection.find_one(
-            {"_id": ObjectId(report["exam_id"])},
-            {"name": 1, "subject": 1, "time_limit": 1, "questions": 1}
-        )
-
-        formatted_report = {
-            "report_id": str(report["_id"]),
-            "exam_id": str(report["exam_id"]),
-            "exam_name": exam.get("name", "Unknown Exam") if exam else "Unknown Exam",
-            "subject": exam.get("subject", "Unknown Subject") if exam else "Unknown Subject",
-            "score": report.get("score", 0),
-            "timestamp": report.get("timestamp", datetime.datetime.utcnow()).strftime("%Y-%m-%d %I:%M %p"),
-            "answers": report.get("answers", []),
-            "questions": exam.get("questions", []) if exam else []
-        }
-
-        return jsonify(formatted_report), 200
-
-    except Exception as e:
-        logger.error(f"Error fetching exam report: {e}")
-        return jsonify({"error": str(e)}), 500
 
 @app.route("/health", methods=["GET"])
 def health_check():
