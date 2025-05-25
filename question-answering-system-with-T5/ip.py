@@ -98,7 +98,7 @@ except Exception as e:
     logger.error(f"Failed to load T5 model: {e}")
     model, tokenizer = None, None
 
-# Initialize Groq client
+
 groq_client = None
 if Config.GROQ_API_KEY:
     try:
@@ -573,7 +573,7 @@ def submit_exam():
 @app.route("/get-user-exam-reports/<user_id>", methods=["GET"])
 @error_handler
 def get_user_exam_reports(user_id):
-    """Get all exam reports for a specific user."""
+    """Get all exam reports for a specific user with complete exam data."""
     try:
         # Get pagination parameters
         page = request.args.get('page', 1, type=int)
@@ -594,21 +594,23 @@ def get_user_exam_reports(user_id):
 
         # Get total count for pagination
         total_count = answer_collection.count_documents({"user_id": user_id})
-
+    
         # Format the reports
         formatted_reports = []
         for report in reports:
-            # Get exam details
+            # Get complete exam details from qa_collection
             exam = collection.find_one(
-                {"_id": ObjectId(report["exam_id"])},
-                {"name": 1, "subject": 1, "time_limit": 1}
+                {"_id": ObjectId(report["exam_id"])}
             )
+
+            # Convert exam data to be JSON serializable
+            if exam:
+                exam = json.loads(json_util.dumps(exam))
 
             formatted_report = {
                 "report_id": str(report["_id"]),
                 "exam_id": str(report["exam_id"]),
-                "exam_name": exam.get("name", "Unknown Exam") if exam else "Unknown Exam",
-                "subject": exam.get("subject", "Unknown Subject") if exam else "Unknown Subject",
+                "exam_data": exam,  # Include complete exam data
                 "score": report.get("score", 0),
                 "timestamp": report.get("timestamp", datetime.datetime.utcnow()).strftime("%Y-%m-%d %I:%M %p"),
                 "answers": report.get("answers", [])
@@ -626,8 +628,6 @@ def get_user_exam_reports(user_id):
     except Exception as e:
         logger.error(f"Error fetching user exam reports: {e}")
         return jsonify({"error": str(e)}), 500
-
-
 
 @app.route("/health", methods=["GET"])
 def health_check():
