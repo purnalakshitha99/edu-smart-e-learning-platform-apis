@@ -570,6 +570,65 @@ def submit_exam():
         "report_id": str(result.inserted_id)
     }), 200
 
+@app.route("/get-user-exam-reports/<user_id>", methods=["GET"])
+@error_handler
+def get_user_exam_reports(user_id):
+    """Get all exam reports for a specific user."""
+    try:
+        # Get pagination parameters
+        page = request.args.get('page', 1, type=int)
+        limit = request.args.get('limit', 10, type=int)
+        skip = (page - 1) * limit
+
+        # Fetch reports for the user with pagination
+        reports = list(answer_collection.find(
+            {"user_id": user_id},
+            {
+                "_id": 1,
+                "exam_id": 1,
+                "score": 1,
+                "timestamp": 1,
+                "answers": 1
+            }
+        ).sort("timestamp", -1).skip(skip).limit(limit))
+
+        # Get total count for pagination
+        total_count = answer_collection.count_documents({"user_id": user_id})
+
+        # Format the reports
+        formatted_reports = []
+        for report in reports:
+            # Get exam details
+            exam = collection.find_one(
+                {"_id": ObjectId(report["exam_id"])},
+                {"name": 1, "subject": 1, "time_limit": 1}
+            )
+
+            formatted_report = {
+                "report_id": str(report["_id"]),
+                "exam_id": str(report["exam_id"]),
+                "exam_name": exam.get("name", "Unknown Exam") if exam else "Unknown Exam",
+                "subject": exam.get("subject", "Unknown Subject") if exam else "Unknown Subject",
+                "score": report.get("score", 0),
+                "timestamp": report.get("timestamp", datetime.datetime.utcnow()).strftime("%Y-%m-%d %I:%M %p"),
+                "answers": report.get("answers", [])
+            }
+            formatted_reports.append(formatted_report)
+
+        return jsonify({
+            "reports": formatted_reports,
+            "total": total_count,
+            "page": page,
+            "limit": limit,
+            "total_pages": (total_count + limit - 1) // limit
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error fetching user exam reports: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+
 @app.route("/health", methods=["GET"])
 def health_check():
     """Health check endpoint."""
