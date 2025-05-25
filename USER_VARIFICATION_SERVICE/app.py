@@ -18,6 +18,41 @@ for folder in [app.config['UPLOAD_IMAGE_FOLDER'], app.config['UPLOAD_AUDIO_FOLDE
     if not os.path.exists(folder):
         os.makedirs(folder)
 
+# @app.route('/api/face_detection', methods=['POST'])
+# def api_face_detection():
+#     try:
+#         username = request.form['username']
+#         image_file = request.files['image_file']
+
+#         save_path = os.path.join(app.config['UPLOAD_IMAGE_FOLDER'], secure_filename(image_file.filename))
+#         image_file.save(save_path)
+
+#         head_pose_text, det_username = face_image_inference(
+#             username,
+#             save_path
+#         )
+
+#         print("user name : "+username)
+
+#         return Response(
+#             response=json.dumps({
+#                 "Head Pose": head_pose_text,
+#                 "Username": det_username
+#             }),
+#             status=200,
+#             mimetype="application/json"
+#         )
+
+#     except Exception as e:
+#         return Response(
+#             response=json.dumps({
+#                 "message": "Face detection failed",
+#                 "error": str(e)
+#             }),
+#             status=400,
+#             mimetype="application/json"
+#         )
+
 @app.route('/api/face_detection', methods=['POST'])
 def api_face_detection():
     try:
@@ -26,13 +61,16 @@ def api_face_detection():
 
         save_path = os.path.join(app.config['UPLOAD_IMAGE_FOLDER'], secure_filename(image_file.filename))
         image_file.save(save_path)
+        
+        print(f"--- [DEBUG] Username: {username}") # DEBUG
+        print(f"--- [DEBUG] Image saved to: {save_path}") # DEBUG
 
         head_pose_text, det_username = face_image_inference(
             username,
             save_path
         )
-
-        print("user name : "+username)
+        
+        print(f"--- [DEBUG] face_image_inference returned: head_pose='{head_pose_text}', detected_user='{det_username}'") # DEBUG
 
         return Response(
             response=json.dumps({
@@ -44,10 +82,20 @@ def api_face_detection():
         )
 
     except Exception as e:
+        # --- IMPORTANT: Print the full exception details ---
+        import traceback
+        print("--- [ERROR] Exception in /api/face_detection: ---")
+        print(f"--- [ERROR] Exception Type: {type(e)}")
+        print(f"--- [ERROR] Exception Message: {str(e)}")
+        print("--- [ERROR] Traceback: ---")
+        traceback.print_exc() # This will print the full stack trace
+        print("-------------------------------------------------")
+        # --- End of important print ---
+
         return Response(
             response=json.dumps({
                 "message": "Face detection failed",
-                "error": str(e)
+                "error": str(e) # This might be empty if str(e) is empty
             }),
             status=400,
             mimetype="application/json"
