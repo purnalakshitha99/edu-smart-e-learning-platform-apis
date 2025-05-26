@@ -1,0 +1,32 @@
+.\ethicalvenv\Scripts\Activate.ps1
+
+.\expression\Scripts\Activate.ps1
+
+.\classroom\Scripts\Activate.ps1
+
+.\questionvenv\Scripts\Activate.ps1
+
+.\uservarificationvenv\Scripts\Activate.ps1
+
+
+
+
+.\.venv\Scripts\Activate.ps1
+
+
+
+
+ethical2\Scripts\activate
+
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+pip freeze > requirements.txt
+
+
+
+
+
+
+
