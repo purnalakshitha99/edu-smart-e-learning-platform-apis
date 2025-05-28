@@ -6,3 +6,4 @@ app/models/pretrained_models
 app/models
 .myenv6
 app/myenv6/
+classroomvenv/
