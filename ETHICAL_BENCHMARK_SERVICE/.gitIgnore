@@ -5,7 +5,13 @@ myenv/
 __pycache__
 /pipe/__pycache__
 ethicalvenv/
+<<<<<<< HEAD
 
 
 
 venv/
+=======
+ethical2/
+venv/
+requirements.txt
+>>>>>>> 3febf9bdc183f3fd42c08e51601f7c9b873e4cf9

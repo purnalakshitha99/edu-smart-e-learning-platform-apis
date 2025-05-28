@@ -26,7 +26,7 @@ class EthicalBenchMarkDetector:
         self.last_look_time = time.time()
         self.looking_away_threshold = 4
         self.detected_objects = []
-        self.time_limit = 60
+        self.time_limit = 60*3
 
         self.current_looking_direction = "Looking forward"
         self.looking_direction_start_time = None

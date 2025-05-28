@@ -1,4 +1,15 @@
 pretrained_models
 .idea
 __pycache__
+<<<<<<< HEAD
 venv
+=======
+venv
+requirements.txt
+.myenv5
+expression
+expression2
+requirements_facial_expression.txt
+requirements_lenovo.txt
+routes/__pycache__
+>>>>>>> 3febf9bdc183f3fd42c08e51601f7c9b873e4cf9

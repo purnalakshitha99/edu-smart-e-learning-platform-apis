@@ -6,5 +6,11 @@ results
 store
 ipynb_checkpoints
 .myenv3
+<<<<<<< HEAD
 uservarificationvenv/
 verificationvenv/
+=======
+venv
+uservarificationvenv/
+requirements.txt
+>>>>>>> 3febf9bdc183f3fd42c08e51601f7c9b873e4cf9

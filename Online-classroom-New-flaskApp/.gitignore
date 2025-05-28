@@ -6,4 +6,12 @@ app/models/pretrained_models
 app/models
 .myenv6
 app/myenv6/
+<<<<<<< HEAD
 classroomvenv/
+=======
+classroom
+classroom/
+app/routes/__pycache__
+requirements_lenovo_classroom.txt
+requirements.txt
+>>>>>>> 3febf9bdc183f3fd42c08e51601f7c9b873e4cf9
