@@ -1,4 +1,5 @@
 
+import utils.session
 import os
 from dotenv import load_dotenv
 from flask import Flask
